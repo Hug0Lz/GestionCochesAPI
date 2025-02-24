@@ -16,7 +16,7 @@ public class CarService {
 
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    private ServiceDetail serviceDetail;
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
@@ -43,12 +43,12 @@ public class CarService {
         this.carDetail = carDetail;
     }
 
-    public Service getService() {
-        return service;
+    public ServiceDetail getService() {
+        return serviceDetail;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setService(ServiceDetail serviceDetail) {
+        this.serviceDetail = serviceDetail;
     }
 
     public LocalDate getStartDate() {

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "services")
-public class Service {
+public class ServiceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +18,7 @@ public class Service {
     @Column(nullable = false)
     private Double price;
 
-    public Service() {
+    public ServiceDetail() {
     }
 
     public Long getId() {
