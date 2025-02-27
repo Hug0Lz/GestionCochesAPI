@@ -27,6 +27,21 @@ public class CarService {
     public CarService() {
     }
 
+    public CarService(Long id, CarDetail carDetail, ServiceDetail serviceDetail, LocalDate startDate, LocalDate endDate) {
+        this.id = id;
+        this.carDetail = carDetail;
+        this.serviceDetail = serviceDetail;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public CarService(CarDetail carDetail, ServiceDetail serviceDetail, LocalDate startDate, LocalDate endDate) {
+        this.carDetail = carDetail;
+        this.serviceDetail = serviceDetail;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public Long getId() {
         return id;
     }
@@ -65,5 +80,16 @@ public class CarService {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return "CarService{" +
+                "id=" + id +
+                ", carDetail=" + carDetail +
+                ", serviceDetail=" + serviceDetail +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 }

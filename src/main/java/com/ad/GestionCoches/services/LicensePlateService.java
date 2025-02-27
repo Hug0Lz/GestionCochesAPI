@@ -21,15 +21,17 @@ public class LicensePlateService {
     }
 
     public LicensePlate getLicensePlateByPlate(String plate) {
-        return null;
-        //todo implementar método para recibir placa por la propia matrícula
-
+        return licensePlateRepository.findByplateNumber(plate);
     }
 
-    public LicensePlate updateLicensePlate(LicensePlate licensePlate) {
-        LicensePlate lp = licensePlateRepository.findById(licensePlate.getId()).orElseThrow(() -> new IllegalArgumentException("No se ha encontrado la matrícula con id " + licensePlate.getId()));
-        lp.setPlate_number(licensePlate.getPlate_number());
-        lp.setCar_id(licensePlate.getCar_id());
+    public LicensePlate addLicensePlate(LicensePlate licensePlate){
+        return licensePlateRepository.save(licensePlate);
+    }
+
+    public LicensePlate updateLicensePlate(Long id, LicensePlate licensePlate) {
+        LicensePlate lp = licensePlateRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No se ha encontrado la matrícula con id " + licensePlate.getId()));
+        lp.setPlateNumber(licensePlate.getPlateNumber());
+        lp.setCarId(licensePlate.getCarId());
         lp.setState(licensePlate.getState());
         return licensePlateRepository.save(lp);
     }
@@ -37,5 +39,9 @@ public class LicensePlateService {
     public void deleteLicensePlate(Long id){
         LicensePlate licensePlate = licensePlateRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No se ha encontrado la matrícula con el id " + id));
         licensePlateRepository.delete(licensePlate);
+    }
+
+    public LicensePlate getLicensePlateByCarId(Long id) {
+        return licensePlateRepository.findByCarId(id);
     }
 }

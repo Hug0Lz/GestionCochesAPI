@@ -8,8 +8,10 @@ public class LicensePlate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String plate_number;
-    private Integer car_id;
+    @Column(name = "plate_number")
+    private String plateNumber;
+    @Column(name = "car_id")
+    private Integer carId;
     private String state;
 
     public LicensePlate() {
@@ -24,20 +26,20 @@ public class LicensePlate {
         this.id = id;
     }
 
-    public String getPlate_number() {
-        return plate_number;
+    public String getPlateNumber() {
+        return plateNumber;
     }
 
-    public void setPlate_number(String plate_number) {
-        this.plate_number = plate_number;
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
     }
 
-    public Integer getCar_id() {
-        return car_id;
+    public Integer getCarId() {
+        return carId;
     }
 
-    public void setCar_id(Integer car_id) {
-        this.car_id = car_id;
+    public void setCarId(Integer carId) {
+        this.carId = carId;
     }
 
     public String getState() {

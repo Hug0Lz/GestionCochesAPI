@@ -20,6 +20,12 @@ public class CarServiceService {
         return carServiceRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No se ha encontrado el servicio con el id " + id));
     }
 
+    public CarService addService(CarService carService){
+        System.out.println("CAR SERVICE: ");
+        System.out.println(carService);
+        return carServiceRepository.save(carService);
+    }
+
     public CarService updateCarService(CarService carService){
         CarService cs = carServiceRepository.findById(carService.getId()).orElseThrow(() ->new IllegalArgumentException("No se ha encontrado el servicio con el id " + carService.getId()));
         return carServiceRepository.save(cs);

@@ -6,25 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Servicio para gestionar las marcas de coches.
  */
 @Service
 public class BrandService {
-
-    private final BrandRepository brandRepository;
-
-    /**
-     * Constructor para inyectar el repositorio de marcas.
-     *
-     * @param brandRepository el repositorio de marcas
-     */
     @Autowired
-    public BrandService(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
-    }
+    private BrandRepository brandRepository;
+
 
     /**
      * Crea una nueva marca.
@@ -49,10 +39,10 @@ public class BrandService {
      * Obtiene una marca por su ID.
      *
      * @param id el ID de la marca
-     * @return una opción que contiene la marca si se encuentra, o vacía si no
+     * @return un objeto Brand si se encuentra, o un IllegalArgumentException si no
      */
-    public Optional<Brand> getBrandById(Long id) {
-        return brandRepository.findById(id);
+    public Brand getBrandById(Long id) {
+        return brandRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("no se ha encontntrado ninguna marca con id " + id));
     }
 
     /**
@@ -65,7 +55,7 @@ public class BrandService {
      */
     public Brand updateBrand(Long id, Brand brandDetails) {
         Brand brand = brandRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se ha encontrado ninguna marca con el id " + id));
+                .orElseThrow(() -> new IllegalArgumentException("No se ha encontrado ninguna marca con el id " + id));
 
         brand.setName(brandDetails.getName());
         brand.setCountry(brandDetails.getCountry());
@@ -81,7 +71,7 @@ public class BrandService {
      */
     public void deleteBrand(Long id) {
         Brand brand = brandRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se ha encontrado ninguna marca con el id " + id));
+                .orElseThrow(() -> new IllegalArgumentException("No se ha encontrado ninguna marca con el id " + id));
         brandRepository.delete(brand);
     }
 }

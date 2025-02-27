@@ -21,6 +21,10 @@ public class ServiceDetailService {
         return serviceRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("No se ha encontrado el servicio con id " + id));
     }
 
+    public ServiceDetail addService(ServiceDetail serviceDetail){
+        return serviceRepository.save(serviceDetail);
+    }
+
     public ServiceDetail updateService(ServiceDetail serviceDetail){
         ServiceDetail sd = serviceRepository.findById(serviceDetail.getId()).orElseThrow(() -> new IllegalArgumentException(("No se ha encontrado el servicio con el id " + serviceDetail.getId())));
         sd.setName(serviceDetail.getName());
