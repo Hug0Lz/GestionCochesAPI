@@ -1,15 +1,30 @@
 package com.ad.GestionCoches.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CarDetailDTO {
+
+    @Schema(description = "ID único del detalle del coche", example = "1")
     private Long id;
+
+    @Schema(description = "Número de identificación del vehículo (VIN)", example = "1HGCM82633A123456")
     private String vin;
+
+    @Schema(description = "Color del coche", example = "Rojo")
     private String color;
+
+    @Schema(description = "Extras del coche", example = "Climatizador, Asientos de cuero")
     private String extras;
+
+    @Schema(description = "Modelo del coche", implementation = CarModel.class)
     private CarModel carModel;
+
+    @Schema(description = "Motor del coche", implementation = CarEngine.class)
     private CarEngine engine;
+
+    @Schema(description = "Lista de servicios asociados al coche", implementation = CarServiceDetailDTO.class)
     private List<CarServiceDetailDTO> carServices;
 
     public CarDetailDTO(CarDetail carDetail) {
@@ -20,7 +35,7 @@ public class CarDetailDTO {
         this.carModel = carDetail.getCarModel();
         this.engine = carDetail.getEngine();
         this.carServices = new ArrayList<>();
-       carDetail.getCarServices().forEach(carService -> this.carServices.add(new CarServiceDetailDTO(carService)));
+        carDetail.getCarServices().forEach(carService -> this.carServices.add(new CarServiceDetailDTO(carService)));
     }
 
     public CarDetailDTO() {

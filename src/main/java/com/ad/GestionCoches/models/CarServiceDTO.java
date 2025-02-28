@@ -1,10 +1,17 @@
 package com.ad.GestionCoches.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 
 public class CarServiceDTO {
+
+    @Schema(description = "ID único del servicio de coche", example = "1")
     private Long idService;
+
+    @Schema(description = "Fecha de inicio del servicio", example = "2025-02-27")
     private LocalDate startDate;
+
+    @Schema(description = "Fecha de finalización del servicio", example = "2025-03-05")
     private LocalDate endDate;
 
     public CarServiceDTO(Long idService, LocalDate startDate, LocalDate endDate) {

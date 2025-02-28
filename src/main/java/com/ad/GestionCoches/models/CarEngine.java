@@ -1,37 +1,70 @@
 package com.ad.GestionCoches.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "car_engine")
 public class CarEngine {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "ID único del motor del coche", example = "1")
     private Long id;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Tipo de combustible del motor", example = "Gasolina")
     private String fuelType;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Tracción del vehículo", example = "Tracción delantera")
     private String drivetrain;
+
     @Column(nullable = false, unique = true)
+    @NotNull
+    @Schema(description = "Código del motor", example = "ABC123")
     private String engineCode;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Par motor del vehículo", example = "350")
     private Integer engineTorque;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Cilindrada del motor en cm³", example = "2000")
     private Integer engineDisplacement;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Número de cilindros del motor", example = "4")
     private Integer cylinderNumber;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Sistema de inyección del motor", example = "Inyección directa")
     private String injectionSystem;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Tipo de aspiración del motor", example = "Turboalimentado")
     private String engineAspiration;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Velocidad máxima alcanzable por el motor (km/h)", example = "240")
     private Integer maximumSpeed;
+
     @Column(nullable = false)
+    @NotNull
+    @Schema(description = "Aceleración 0-100 km/h en segundos", example = "6.5")
     private Double acceleration;
 
     public CarEngine() {
     }
-
 
     public Long getId() {
         return id;
