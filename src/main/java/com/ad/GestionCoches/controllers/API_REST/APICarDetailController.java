@@ -1,4 +1,4 @@
-package com.ad.GestionCoches.controllers;
+package com.ad.GestionCoches.controllers.API_REST;
 
 import com.ad.GestionCoches.models.CarDetail;
 import com.ad.GestionCoches.models.CarDetailDTO;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cars/detail")
-public class CarDetailController {
+public class APICarDetailController {
 
     @Autowired
     public CarDetailService carDetailService;
@@ -39,6 +39,17 @@ public class CarDetailController {
             @ApiResponse(responseCode = "200", description = "Detalles del coche encontrados"),
             @ApiResponse(responseCode = "404", description = "Coche no encontrado")
     })
+
+    @GetMapping("/model/{id}")
+    public List<CarDetailDTO> getCarDetailsByModelId(@PathVariable Long id){
+        return carDetailService.getAllCarDetailByCarModelId(id);
+    }
+
+    @GetMapping("/services/{id}")
+    public List<CarDetailDTO> getCarDetailByServiceId(@PathVariable Long id){
+        return carDetailService.getAllCarDetailByServiceId(id);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CarDetailDTO> getCarDetailById(
             @Parameter(description = "ID del coche a obtener los detalles") @PathVariable Long id) {

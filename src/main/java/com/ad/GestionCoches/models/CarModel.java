@@ -43,6 +43,10 @@ public class CarModel {
     @Schema(description = "Marca del coche", example = "Audi")
     private Brand brand;
 
+    @Column
+    @Schema(description = "Dirección de la imagen del coche", example = "img/audi-a4")
+    private String image;
+
     public CarModel() {
     }
 
@@ -100,5 +104,13 @@ public class CarModel {
 
     public void setBrand(Brand brand) {
         this.brand = brand;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

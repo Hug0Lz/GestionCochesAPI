@@ -82,4 +82,16 @@ public class CarServiceDetailDTO {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "CarServiceDetailDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

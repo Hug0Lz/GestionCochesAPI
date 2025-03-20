@@ -1,4 +1,4 @@
-package com.ad.GestionCoches.controllers;
+package com.ad.GestionCoches.controllers.API_REST;
 
 import com.ad.GestionCoches.models.CarModel;
 import com.ad.GestionCoches.services.CarModelService;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cars/model")
-public class CarModelController {
+public class APICarModelController {
 
     @Autowired
     private CarModelService carModelService;

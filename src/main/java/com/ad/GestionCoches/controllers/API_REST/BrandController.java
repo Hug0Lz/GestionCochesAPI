@@ -1,4 +1,4 @@
-package com.ad.GestionCoches.controllers;
+package com.ad.GestionCoches.controllers.API_REST;
 
 import com.ad.GestionCoches.models.Brand;
 import com.ad.GestionCoches.services.BrandService;
@@ -33,10 +33,14 @@ public class BrandController {
             @ApiResponse(responseCode = "200", description = "Marca encontrada"),
             @ApiResponse(responseCode = "404", description = "Marca no encontrada")
     })
+    
     @GetMapping("/{id}")
-    public ResponseEntity<Brand> getBrandById(
-            @Parameter(description = "ID de la marca a obtener") @PathVariable Long id) {
-        return ResponseEntity.ok(brandService.getBrandById(id));
+    public ResponseEntity<Brand> getBrandById(@PathVariable Long id) {
+        Brand brand = brandService.getBrandById(id);
+        if (brand == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(brand);
     }
 
     @Operation(summary = "Agregar una nueva marca", description = "Crea una nueva marca de coche.")

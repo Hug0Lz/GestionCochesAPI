@@ -1,4 +1,4 @@
-package com.ad.GestionCoches.controllers;
+package com.ad.GestionCoches.controllers.API_REST;
 
 import com.ad.GestionCoches.models.LicensePlate;
 import com.ad.GestionCoches.services.LicensePlateService;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/licensePlates")
-public class LicensePlatesController {
+public class APILicensePlatesController {
 
     @Autowired
     private LicensePlateService licensePlateService;

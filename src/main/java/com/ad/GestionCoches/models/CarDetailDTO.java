@@ -96,4 +96,17 @@ public class CarDetailDTO {
     public void setCarServices(List<CarServiceDetailDTO> carServices) {
         this.carServices = carServices;
     }
+
+    @Override
+    public String toString() {
+        return "CarDetailDTO{" +
+                "id=" + id +
+                ", vin='" + vin + '\'' +
+                ", color='" + color + '\'' +
+                ", extras='" + extras + '\'' +
+                ", carModel=" + carModel +
+                ", engine=" + engine +
+                ", carServices=" + carServices +
+                '}';
+    }
 }
