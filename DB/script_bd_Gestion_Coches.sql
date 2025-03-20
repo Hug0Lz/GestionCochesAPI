@@ -23,7 +23,9 @@ CREATE TABLE car_models (
   segment ENUM('A', 'B', 'C', 'D', 'E', 'F', 'J', 'M', 'S'),
   price DECIMAL(10, 2),
   brand_id BIGINT,
-  FOREIGN KEY (brand_id) REFERENCES brands(id_brands)
+  image VARCHAR(255),
+  FOREIGN KEY (brand_id) REFERENCES brands(id_brands) 
+  ON DELETE CASCADE
 );
 
 CREATE TABLE car_engine (
@@ -48,8 +50,10 @@ CREATE TABLE car_details (
   extras TEXT,
   car_model_id BIGINT,
   engine_id BIGINT,  -- Nueva clave foránea para car_engine
-  FOREIGN KEY (car_model_id) REFERENCES car_models(id_car_models),
+  FOREIGN KEY (car_model_id) REFERENCES car_models(id_car_models)
+  ON DELETE CASCADE,
   FOREIGN KEY (engine_id) REFERENCES car_engine(id)
+  ON DELETE CASCADE
 );
 
 CREATE TABLE car_service (
@@ -58,9 +62,12 @@ CREATE TABLE car_service (
   service_id BIGINT,
   start_date DATE,
   end_date DATE,
-  FOREIGN KEY (car_detail_id) REFERENCES car_details(id),
-  FOREIGN KEY (service_id) REFERENCES services(id),
+  FOREIGN KEY (car_detail_id) REFERENCES car_details(id)
+  ON DELETE CASCADE,
+  FOREIGN KEY (service_id) REFERENCES services(id)
+  ON DELETE CASCADE,
   UNIQUE (car_detail_id, service_id)  -- Asegura que un coche no tenga el mismo servicio más de una vez
+  
 );
 
 CREATE TABLE license_plates (
@@ -69,6 +76,7 @@ CREATE TABLE license_plates (
   car_id BIGINT,
   state TEXT,
   FOREIGN KEY (car_id) REFERENCES car_details(id)
+  ON DELETE CASCADE
 );
 
 INSERT INTO brands (name, country) VALUES 
@@ -109,21 +117,22 @@ INSERT INTO brands (name, country) VALUES
 ('Volvo', 'Suecia');
 
 
-INSERT INTO car_models (model, generation, `year`, segment, price, brand_id) VALUES 
-('A4', 'B9', 2023, 'D', 45000.00, (SELECT id_brands FROM brands WHERE name='Audi')),
-('Civic', '10th', 2022, 'C', 25000.00, (SELECT id_brands FROM brands WHERE name='Honda')),
-('Model 3', '1st', 2023, 'D', 55000.00, (SELECT id_brands FROM brands WHERE name='Tesla')),
-('Corolla', '12th', 2023, 'C', 23000.00, (SELECT id_brands FROM brands WHERE name='Toyota')),
-('Golf', '8th', 2023, 'C', 27000.00, (SELECT id_brands FROM brands WHERE name='Volkswagen')),
-('3 Series', 'G20', 2023, 'D', 48000.00, (SELECT id_brands FROM brands WHERE name='BMW')),
-('Qashqai', '3rd', 2023, 'C', 32000.00, (SELECT id_brands FROM brands WHERE name='Nissan')),
-('508', '2nd', 2023, 'D', 35000.00, (SELECT id_brands FROM brands WHERE name='Peugeot')),
-('Clio', '5th', 2023, 'B', 19000.00, (SELECT id_brands FROM brands WHERE name='Renault')),
-('Tucson', '4th', 2023, 'C', 31000.00, (SELECT id_brands FROM brands WHERE name='Hyundai')),
-('Panda', '3rd', 2023, 'A', 15000.00, (SELECT id_brands FROM brands WHERE name='Fiat')),
-('XC60', '2nd', 2023, 'D', 53000.00, (SELECT id_brands FROM brands WHERE name='Volvo')),
-('F-Pace', '1st', 2023, 'D', 60000.00, (SELECT id_brands FROM brands WHERE name='Jaguar')),
-('Defender', '2nd', 2023, 'J', 70000.00, (SELECT id_brands FROM brands WHERE name='Land Rover'));
+INSERT INTO car_models (model, generation, `year`, segment, price, brand_id, image) VALUES 
+('A4', 'B9', 2023, 'D', 45000.00, (SELECT id_brands FROM brands WHERE name='Audi'), 'img/audi-a4.webp'),
+('Civic', '10th', 2022, 'C', 25000.00, (SELECT id_brands FROM brands WHERE name='Honda'), 'img/honda-civic.jpg'),
+('Model 3', '2nd', 2024, 'D', 55000.00, (SELECT id_brands FROM brands WHERE name='Tesla'), 'img/tesla-model-3.webp'),
+('Corolla', '12th', 2023, 'C', 23000.00, (SELECT id_brands FROM brands WHERE name='Toyota'), 'img/toyota-corolla.jpeg'),
+('Golf', '8th', 2023, 'C', 27000.00, (SELECT id_brands FROM brands WHERE name='Volkswagen'), 'img/volkswagen-golf.jpg'),
+('3 Series', 'G20', 2023, 'D', 48000.00, (SELECT id_brands FROM brands WHERE name='BMW'), 'img/bmw-serie-3.jpg'),
+('Qashqai', '3rd', 2023, 'C', 32000.00, (SELECT id_brands FROM brands WHERE name='Nissan'), 'img/nissan-qashqai.jpg'),
+('508', '2nd', 2023, 'D', 35000.00, (SELECT id_brands FROM brands WHERE name='Peugeot'), 'img/peugeot-508.webp'),
+('Clio', '5th', 2023, 'B', 19000.00, (SELECT id_brands FROM brands WHERE name='Renault'), 'img/renault-clio.webp'),
+('Tucson', '4th', 2023, 'C', 31000.00, (SELECT id_brands FROM brands WHERE name='Hyundai'), 'img/hyundai-tucson.webp'),
+('Panda', '3rd', 2023, 'A', 15000.00, (SELECT id_brands FROM brands WHERE name='Fiat'), 'img/fiat-panda.jpg'),
+('XC60', '2nd', 2023, 'D', 53000.00, (SELECT id_brands FROM brands WHERE name='Volvo'), 'img/volvo-xc60.jpg'),
+('F-Pace', '1st', 2023, 'D', 60000.00, (SELECT id_brands FROM brands WHERE name='Jaguar'), 'img/jaguar-f-pace.jpg'),
+('Defender', '2nd', 2023, 'J', 70000.00, (SELECT id_brands FROM brands WHERE name='Land Rover'), 'img/land-rover-defender.webp');
+
 
 
 
@@ -147,8 +156,9 @@ INSERT INTO car_engine (fuel_type, drivetrain, engine_code, engine_hp, engine_to
 INSERT INTO car_details (vin, color, extras, car_model_id, engine_id) VALUES 
 ('1HGCM82633A123456', 'Rojo', 'Navegación, Asientos de cuero', 1, 1),  -- Audi A4
 ('2HGCM82633A123456', 'Azul', 'Cámara de reversa, Sensores de aparcamiento', 2, 2),  -- Honda Civic
-('3HGCM82633A123456', 'Blanco', 'Techo panorámico, Llantas de aleación', 3, 3),  -- Tesla Model 3
-('4HGCM82633A123456', 'Negro', 'Sistema de sonido premium, Asientos calefaccionados', 4, 4),  -- Toyota Corolla
+('3HGCM82633A123456', 'Rojo', 'Techo panorámico, Llantas de aleación', 3, 3),  -- Tesla Model 3
+('5HGCM82633A122456', 'Blanco', 'Techo panorámico, Asientos calefactados', 3, 3),  -- Tesla Model 3
+('4HGCM82633A123456', 'Negro', 'Sistema de sonido premium, Asientos calefactados', 4, 4),  -- Toyota Corolla
 ('5HGCM82633A123456', 'Gris', 'Control de crucero adaptativo, Faros LED', 5, 5),  -- Volkswagen Golf
 ('6HGCM82633A123456', 'Verde', 'Paquete deportivo, Frenos de alto rendimiento', 6, 6),  -- BMW 3 Series
 ('7HGCM82633A123456', 'Amarillo', 'Asistente de mantenimiento de carril, Pantalla táctil', 7, 7),  -- Nissan Qashqai
@@ -184,7 +194,10 @@ INSERT INTO services (name, description, price) VALUES
 INSERT INTO car_service (car_detail_id, service_id, start_date, end_date) VALUES 
 ((SELECT id FROM car_details WHERE vin='1HGCM82633A123456'), (SELECT id FROM services WHERE name='Garantía Extendida'), '2023-01-01', '2025-01-01'),
 ((SELECT id FROM car_details WHERE vin='2HGCM82633A123456'), (SELECT id FROM services WHERE name='Mantenimientos Gratuitos'), '2023-01-01', '2026-01-01'),
+((SELECT id FROM car_details WHERE vin='2HGCM82633A123456'), (SELECT id FROM services WHERE name='Revisiones Anuales'), '2023-01-01', '2026-01-01'),
 ((SELECT id FROM car_details WHERE vin='3HGCM82633A123456'), (SELECT id FROM services WHERE name='Seguro Todo Riesgo'), '2023-01-01', '2024-01-01'),
+((SELECT id FROM car_details WHERE vin='3HGCM82633A123456'), (SELECT id FROM services WHERE name='Asistencia en Carretera'), '2023-01-01', '2026-01-01'),
+((SELECT id FROM car_details WHERE vin='5HGCM82633A122456'), (SELECT id FROM services WHERE name='Revisiones Anuales'), '2023-01-01', '2026-01-01'),
 ((SELECT id FROM car_details WHERE vin='4HGCM82633A123456'), (SELECT id FROM services WHERE name='Asistencia en Carretera'), '2023-01-01', '2026-01-01'),
 ((SELECT id FROM car_details WHERE vin='5HGCM82633A123456'), (SELECT id FROM services WHERE name='Revisiones Anuales'), '2023-01-01', '2028-01-01');
 
